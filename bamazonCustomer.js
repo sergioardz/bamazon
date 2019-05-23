@@ -3,7 +3,6 @@
 // Require modules/packages
 var mysql = require("mysql");
 var inquirer = require("inquirer");
-var table = require("table");
 
 // Set connection to MySQL
 var connection = mysql.createConnection({
@@ -29,26 +28,22 @@ connection.connect(function (err) {
 });
 
 
-// First Function that displays all product information, including a header and calling the second function at the end for the next steps
+// First Function that displays all product information, including a header
+// And checking if there are items in stock, if not, they won't show
 var displayItems = function () {
 	connection.query("SELECT * FROM products", function (err, response) {
 		if (err) throw err;
 		console.log(
-			"ID || Product || Department || Price || Stock " +
-			"\n-----------------------------------------------------"
-		);
+			"ID || Product || Price USD " +
+			"\n-----------------------------------------------------");
 		for (i = 0; i < response.length; i++) {
-			console.log(
-				response[i].item_id + " || " +
-				response[i].product_name + " || " +
-				response[i].department_name + " || " +
-				response[i].price + " || " +
-				response[i].stock_quantity + "\n"
-			);
+			if (response[i].stock_quantity > 0) {
+				console.log(
+					response[i].item_id + " || " +
+					response[i].product_name + " || " +
+					response[i].price + " || " + "\n")
+			}
 		}
-		// promptUser();
-	});
+	})
 };
 
-
-// Second Function that will ask the user which id belongs to the product they want to purchase and a second prompt to ask for the quantity to purchase of the selected item
