@@ -24,7 +24,6 @@ connection.connect(function (err) {
 		"\nWelcome to Bamazon!, These are the available items: " +
 		"\n=====================================================");
 	displayItems();
-	// connection.end();
 });
 
 
@@ -47,9 +46,10 @@ var displayItems = function () {
 	})
 };
 
-// Second Function
+// Second Function which holds the logic to get input from the user, validate the input and update the database accordingly
 
 var promptUsers = function (response) {
+	// Create an array to catch all IDs from which the customer can choose
 	var itemsAvailable = [];
 	for (i = 0; i < response.length; i++) {
 		itemsAvailable.push("" + response[i].item_id + "");
@@ -66,12 +66,16 @@ var promptUsers = function (response) {
 			message: "How many units of this product would you like to buy?"
 		}]).then(function (answer) {
 			var id = answer.itemid - 1;
+			// Validate the chosen ID
 			if (itemsAvailable.includes("" + (answer.itemid) + "")) {
 				var units = answer.units;
+				// Validate if the quantity is an integer
 				if (Number.isInteger(units)) {
+					// Validate if the quantity is greater than zero
 					if (units > 0) {
 						var newStock = response[id].stock_quantity - units
 						var product = response[id].product_name;
+						// Validate if there is enough stock available to handle order
 						if (newStock >= 0) {
 							connection.query("UPDATE products SET stock_quantity='" + newStock + "' WHERE item_id='" + response[answer.itemid - 1].item_id + "'", function (err, res) {
 								console.log("Your order: " + units + " of " + product + " is processed with a total of: " + (units * response[answer.itemid - 1].price + " USD"));
@@ -81,6 +85,7 @@ var promptUsers = function (response) {
 										name: "continue",
 										message: "Continue shopping?"
 									}]).then(function (answer) {
+										// Validate if the customer wants to continue shopping
 										if (answer.continue) {
 											displayItems();
 										} else {
@@ -106,8 +111,3 @@ var promptUsers = function (response) {
 			}
 		})
 };
-
-// console.log(product);
-// console.log(units);
-// console.log("Your order is " + units + " units of " + product);
-// console.log("yes");
