@@ -1,4 +1,6 @@
-// First app of the HW Assignment
+// First app of the HW Assignment - Challenge # 1
+
+require("dotenv").config();
 
 // Require modules/packages
 var mysql = require("mysql");
@@ -12,7 +14,7 @@ var connection = mysql.createConnection({
 	// Your username
 	user: "root",
 	// Your password
-	password: "Agu4c4t3",
+	password: process.env.MYSQL_PASSWORD,
 	database: "bamazon"
 });
 
@@ -39,8 +41,7 @@ var displayItems = function () {
 			console.log(
 				response[i].item_id + " || " +
 				response[i].product_name + " || " +
-				response[i].price + " || " + "\n")
-
+				response[i].price + " || " + "\n");
 		}
 		promptUsers(response);
 	})
@@ -78,7 +79,7 @@ var promptUsers = function (response) {
 						// Validate if there is enough stock available to handle order
 						if (newStock >= 0) {
 							connection.query("UPDATE products SET stock_quantity='" + newStock + "' WHERE item_id='" + response[answer.itemid - 1].item_id + "'", function (err, res) {
-								console.log("Your order: " + units + " of " + product + " is processed with a total of: " + (units * response[answer.itemid - 1].price + " USD"));
+								console.log("Your order: " + units + " of " + product + " is processed with a total of: " + ((units * response[answer.itemid - 1].price).toFixed(2) + " USD"));
 								inquirer.prompt([
 									{
 										type: "confirm",
