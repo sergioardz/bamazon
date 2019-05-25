@@ -4,7 +4,10 @@ CLI App - node.js and mysql databases
 ### Overview
 Bamazon is an Amazon-like storefront. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
 
-![Demo Challenge 1](https://raw.github.com/sergioardz79/bamazon/master/Demos/Challenge-1.gif)    
+![Demo Challenge 1](https://raw.github.com/sergioardz79/bamazon/master/Demos/Challenge-1.gif "Challenge 1")  
+![Demo Challenge 2-1](https://raw.github.com/sergioardz79/bamazon/master/Demos/Challenge-2-1.gif "Challenge 2-1")  
+![Demo Challenge 2-2](https://raw.github.com/sergioardz79/bamazon/master/Demos/Challenge-2-2.gif "Challenge 2-2")  
+![Demo Challenge 2-3](https://raw.github.com/sergioardz79/bamazon/master/Demos/Challenge-2-3.gif "Challenge 2-3")     
 
 
 ### BAMAZON Specifics - What the project does
